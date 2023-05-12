@@ -9,6 +9,11 @@ library stock_charts;
 
 import 'package:flutter/material.dart';
 
+import '../model/chart_model.dart';
+import 'chart_context.dart';
+import 'chart_layer.dart';
+import 'chart_props.dart';
+
 class ChartView extends StatefulWidget {
   const ChartView({super.key});
   @override
@@ -16,6 +21,14 @@ class ChartView extends StatefulWidget {
 }
 
 class _ChartViewState extends State<ChartView> {
+  // [0]
+  ChartModel m_model = ChartModel();
+  ChartProps m_props = ChartProps();
+  ChartContext m_context = ChartContext();
+
+  // [1]
+  List<ChartLayer> m_layers = [];
+
   PointerEvent? _event;
 
   @override
