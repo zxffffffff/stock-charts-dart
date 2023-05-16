@@ -8,6 +8,8 @@
 library stock_charts;
 
 import 'package:flutter/material.dart';
+import 'package:stock_charts/core/stock_core.dart';
+import 'package:stock_charts/model/chart_model.dart';
 
 import 'view/chart_view.dart';
 
@@ -28,13 +30,13 @@ class _ChartState extends State<Chart> {
     super.dispose();
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
-    return const Column(
-        children: [
-          ChartView(),
-          ChartView(),
-        ],
+    return Column(
+      children: [
+        ChartView(ChartModel(StockCore())),
+        ChartView(ChartModel(StockCore())),
+      ],
     );
   }
 }

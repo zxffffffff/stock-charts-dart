@@ -12,8 +12,10 @@ import 'chart_plugin.dart';
 
 class ChartModel {
   // [0]
-  StockCore m_stockCore = StockCore();
+  final StockCore stockCore;
 
   // [1]
-  List<ChartPlugin> m_plugins = [];
+  final List<ChartPlugin> plugins = [];
+
+  ChartModel(this.stockCore);
 }

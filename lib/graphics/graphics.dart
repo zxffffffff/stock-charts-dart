@@ -7,8 +7,6 @@
 //**************************************************************************/
 library stock_charts;
 
-import 'dart:math';
-
 typedef Real = double;
 const Real RealNull = -1.7976931348623158e+308;
 

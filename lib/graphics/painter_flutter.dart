@@ -7,10 +7,16 @@
 //**************************************************************************/
 library stock_charts;
 
-import '../core/stock_core.dart';
+import 'dart:ui';
+import 'painter.dart';
 
-class ChartPlugin {
-  final StockCore stockCore;
+class PainterFlutter extends Painter {
+  Canvas canvas;
+  PainterFlutter(this.canvas);
 
-  ChartPlugin(this.stockCore);
+  @override
+  void save() {}
+
+  @override
+  void restore() {}
 }
