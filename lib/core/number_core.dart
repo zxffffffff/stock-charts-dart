@@ -25,7 +25,7 @@ class NumberCore {
   List<Number> data; // growable: true
   List<String> other; // growable: true
 
-  NumberCore({List<Number> data = const [], List<String> other = const []})
+  NumberCore([List<Number> data = const [], List<String> other = const []])
       : data = List<Number>.from(data),
         other = List<String>.from(other);
 
@@ -37,7 +37,7 @@ class NumberCore {
       : data = List<Number>.from([val]),
         other = List<String>.from([]);
 
-  NumberCore.withCount(int cnt, {Number val = NumberNull})
+  NumberCore.withCount(int cnt, [Number val = NumberNull])
       : data = List<Number>.filled(cnt, val, growable: true),
         other = List<String>.from([]);
 
@@ -49,7 +49,7 @@ class NumberCore {
     return data.length;
   }
 
-  void resize(int cnt, {Number val = NumberNull}) {
+  void resize(int cnt, [Number val = NumberNull]) {
     if (cnt < data.length) {
       data.removeRange(cnt, data.length);
     } else if (cnt > data.length) {

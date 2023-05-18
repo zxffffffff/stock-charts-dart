@@ -7,10 +7,18 @@
 //**************************************************************************/
 library stock_charts;
 
+import '../core/data_binding.dart';
+
 import '../core/stock_core.dart';
 
-class ChartPlugin {
-  final StockCore stockCore;
+const String ID_ChartPluginChanged = "ID_ChartPluginChanged";
 
-  ChartPlugin(this.stockCore);
+class ChartPlugin with DataBinding {
+  void init(StockCore stockCore) {
+    // override
+  }
+
+  void onStockCoreChanged(StockCore stockCore) {
+    // override
+  }
 }

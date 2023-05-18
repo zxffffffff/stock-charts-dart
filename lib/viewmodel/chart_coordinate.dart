@@ -9,11 +9,10 @@ library stock_charts;
 
 import 'dart:math';
 
-import 'package:stock_charts/view/chart_context.dart';
-import 'package:stock_charts/view/chart_props.dart';
-
 import '../core/number_core.dart';
 import '../graphics/graphics.dart';
+import 'chart_context.dart';
+import 'chart_props.dart';
 
 class ChartCoordinate {
   final ChartProps props;

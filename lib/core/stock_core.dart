@@ -18,6 +18,16 @@ class StockCore {
   NumberCore amount = NumberCore();
   NumberCore timestamp = NumberCore();
 
+  void reset(StockCore rhs) {
+    open = rhs.open;
+    high = rhs.high;
+    low = rhs.low;
+    close = rhs.close;
+    vol = rhs.vol;
+    amount = rhs.amount;
+    timestamp = rhs.timestamp;
+  }
+
   StockCore reverse() {
     open.reverse();
     high.reverse();
