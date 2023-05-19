@@ -8,6 +8,7 @@
 library stock_charts;
 
 import 'package:flutter/material.dart';
+import 'package:stock_charts/core/data_binding.dart';
 import '../core/number_core.dart';
 import '../graphics/graphics.dart' as stock_charts;
 import '../graphics/painter_flutter.dart' as stock_charts;
@@ -22,40 +23,74 @@ class ChartView extends StatefulWidget {
   State<ChartView> createState() => _ChartViewState();
 }
 
-class _ChartViewState extends State<ChartView> {
-  Size viewSize = const Size(400, 300);
-  PointerEvent? _event;
+class _ChartViewState extends State<ChartView> with DataBinding {
+  bool _isLongPress = false;
 
   @override
   void initState() {
     super.initState();
-    widget.vm
-        .onResize(stock_charts.Rect(0, 0, viewSize.width, viewSize.height));
+
+    listen(widget.vm);
   }
 
   @override
   dispose() {
+    unlisten(widget.vm);
+
     super.dispose();
+  }
+
+  void syncSubChart(ChartView otherChart) {
+    widget.vm.setSyncOther(otherChart.vm);
+  }
+
+  @override
+  void on(DataBinding sender, String id) {
+    if (sender == widget.vm) {
+      fire(id);
+      setState(() {}); // update
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      child: CustomPaint(
-        size: viewSize,
-        painter: MyPainter(widget.vm),
-      ),
-      onPointerDown: (PointerDownEvent event) => setState(() => _event = event),
-      onPointerMove: (PointerMoveEvent event) => setState(() => _event = event),
-      onPointerUp: (PointerUpEvent event) => setState(() => _event = event),
-    );
+    return Expanded(child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      var size = constraints.biggest;
+      Future.delayed(const Duration(milliseconds: 50), () {
+        widget.vm.onResize(stock_charts.Rect(0, 0, size.width, size.height));
+      });
+      return GestureDetector(
+        onLongPress: () {
+          _isLongPress = true;
+        },
+        onLongPressUp: () {
+          _isLongPress = false;
+        },
+        onPanUpdate: (details) {
+          if (_isLongPress) {
+            widget.vm.onMouseMove(stock_charts.Point(
+                details.localPosition.dx, details.localPosition.dy));
+          } else {
+            widget.vm.onMouseLeave();
+            widget.vm.onScrollX(-details.delta.dx.round());
+          }
+        },
+        onVerticalDragUpdate: (details) {
+          widget.vm.onWheelY(details.delta.dy.round());
+        },
+        child: CustomPaint(
+          painter: MyPainter(widget.vm),
+          size: size,
+        ),
+      );
+    }));
   }
 }
 
 class MyPainter extends CustomPainter {
   final ChartViewModel vm;
   MyPainter(this.vm);
-  Offset cursor = Offset(0, 0);
 
   @override
   void paint(Canvas canvas, Size size) {
