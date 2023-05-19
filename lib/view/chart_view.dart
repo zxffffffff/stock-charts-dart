@@ -23,11 +23,14 @@ class ChartView extends StatefulWidget {
 }
 
 class _ChartViewState extends State<ChartView> {
+  Size viewSize = const Size(400, 300);
   PointerEvent? _event;
 
   @override
   void initState() {
     super.initState();
+    widget.vm
+        .onResize(stock_charts.Rect(0, 0, viewSize.width, viewSize.height));
   }
 
   @override
@@ -39,7 +42,7 @@ class _ChartViewState extends State<ChartView> {
   Widget build(BuildContext context) {
     return Listener(
       child: CustomPaint(
-        size: const Size(400, 300),
+        size: viewSize,
         painter: MyPainter(widget.vm),
       ),
       onPointerDown: (PointerDownEvent event) => setState(() => _event = event),
@@ -58,16 +61,6 @@ class MyPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final painter = stock_charts.PainterFlutter(canvas);
     vm.onPaint(painter);
-
-    var rect = Offset.zero & size;
-    var paint = Paint()
-      ..isAntiAlias = true
-      ..style = PaintingStyle.fill //填充
-      ..color = const Color(0xFFDCC48C);
-    canvas.drawLine(cursor, rect.topLeft, paint);
-    canvas.drawLine(cursor, rect.topRight, paint);
-    canvas.drawLine(cursor, rect.bottomLeft, paint);
-    canvas.drawLine(cursor, rect.bottomRight, paint);
   }
 
   @override

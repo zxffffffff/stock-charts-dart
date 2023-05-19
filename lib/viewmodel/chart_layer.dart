@@ -39,7 +39,7 @@ const String ID_ChartLayerChanged = "ID_ChartLayerChanged";
 
 class ChartLayer with DataBinding {
   // layers-indexs-exps
-  List<StChartAreaIndex> _areaIndexs = [];
+  List<StChartAreaIndex> areaIndexs = [];
 
   void init(ChartModel model, ChartProps props, ChartContext context) {
     // override

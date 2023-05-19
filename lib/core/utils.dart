@@ -9,10 +9,17 @@ library stock_charts;
 
 import 'package:intl/intl.dart';
 
+import 'number_core.dart';
+
 class NumberUtils {
-  static String toTimestr(int timestamp,
+  static String toStr(Number price, [int precision = 2, String sNull = "--"]) {
+    if (price == NumberNull) return sNull;
+    return price.toStringAsFixed(precision);
+  }
+
+  static String toTimeStr(Number timestamp,
       [String format = "yyyy-MM-dd HH:mm:ss"]) {
-    var date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    var date = DateTime.fromMillisecondsSinceEpoch((timestamp * 1000).toInt());
     var formattedDate = DateFormat(format).format(date);
     return formattedDate;
   }

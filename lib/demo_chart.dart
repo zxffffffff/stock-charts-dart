@@ -8,6 +8,8 @@
 library stock_charts;
 
 import 'package:flutter/material.dart';
+import 'package:stock_charts/viewmodel/layer/layer_bg.dart';
+import 'package:stock_charts/viewmodel/layer/layer_stock.dart';
 import 'core/stock_core.dart';
 import 'model/chart_model.dart';
 import 'core/number_core.dart';
@@ -17,26 +19,35 @@ import 'viewmodel/chart_viewmodel.dart';
 
 class StChart {
   final bool main;
+  final ChartView view;
   final ChartViewModel vm;
   final ChartModel model;
   StChart(
     this.main,
+    this.view,
     this.vm,
     this.model,
   );
 }
 
 class DemoChart extends StatefulWidget {
-  StockCore stockCore = Candlestick();
-  List<StChart> kcharts = [];
+  final StockCore stockCore = Candlestick();
+  final List<StChart> kcharts = [];
 
   DemoChart({super.key}) {
-    int nKChartCnt = 2;
+    const int nKChartCnt = 2;
     for (int i = 0; i < nKChartCnt; i++) {
       bool main = (i == 0);
       var model = ChartModel(stockCore);
       var vm = ChartViewModel(model);
-      kcharts.add(StChart(main, vm, model));
+      if (main) {
+        vm.addLayer(LayerBG());
+        vm.addLayer(LayerStock());
+      } else {
+        vm.addLayer(LayerBG());
+      }
+      var view = ChartView(vm);
+      kcharts.add(StChart(main, view, vm, model));
     }
   }
 
@@ -59,8 +70,8 @@ class _DemoChartState extends State<DemoChart> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ChartView(widget.kcharts[0].vm),
-        ChartView(widget.kcharts[0].vm),
+        widget.kcharts[0].view,
+        widget.kcharts[0].view,
       ],
     );
   }
