@@ -8,12 +8,12 @@
 library stock_charts;
 
 mixin DataBinding {
-  final Set<DataBinding> _listeners = {};
-  final Set<DataBinding> _senders = {};
+  final Set<WeakReference<DataBinding>> _listeners = {};
+  final Set<WeakReference<DataBinding>> _senders = {};
 
   void listen(DataBinding sender) {
-    sender._listeners.add(this);
-    _senders.add(sender);
+    sender._listeners.add(WeakReference(this));
+    _senders.add(WeakReference(sender));
   }
 
   void unlisten(DataBinding sender) {
@@ -23,7 +23,8 @@ mixin DataBinding {
 
   void fire(String id) {
     for (var listener in _listeners) {
-      listener.on(this, id);
+      assert(listener.target != null);
+      listener.target?.on(this, id);
     }
   }
 
@@ -31,11 +32,11 @@ mixin DataBinding {
     // override
   }
 
-  Set<DataBinding> getListeners() {
+  Set<WeakReference<DataBinding>> getListeners() {
     return _listeners;
   }
 
-  Set<DataBinding> getSenders() {
+  Set<WeakReference<DataBinding>> getSenders() {
     return _senders;
   }
 }
