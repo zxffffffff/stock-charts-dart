@@ -96,7 +96,7 @@ class ChartLayer with DataBinding {
       final Real lPos = coordinate.price2pos(low[index]);
       final Real cPos = coordinate.price2pos(c);
 
-      exp.sticks[i].set(
+      exp.sticks[i] = Stick(
           xPos - context.stickWidth / 2,
           min(oPos, cPos),
           context.stickWidth,
@@ -125,7 +125,7 @@ class ChartLayer with DataBinding {
       final Real xPos = coordinate.index2pos(index);
       final Real yPos = coordinate.price2pos(price[index]);
 
-      exp.lines[i].set(xPos, yPos);
+      exp.lines[i] = Point(xPos, yPos);
     }
     return exp;
   }

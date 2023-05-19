@@ -71,7 +71,7 @@ class _DemoChartState extends State<DemoChart> {
     return Column(
       children: [
         widget.kcharts[0].view,
-        widget.kcharts[0].view,
+        widget.kcharts[1].view,
       ],
     );
   }
