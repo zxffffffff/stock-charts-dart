@@ -61,16 +61,17 @@ class ChartViewModel with DataBinding {
     }
 
     {
-      // todo
-      //ChartViewModel other = sender as ChartViewModel;
-      //var ctx = other.ctx;
+      ChartViewModel other = sender as ChartViewModel;
+      var ctx = other.context;
 
-      //if (id == ID_OnMouseMove || id == ID_OnMouseLeave)
-      //  syncMouseMove(ctx.hoverNormal.index, ctx.hoverNormal.price);
-      //else if (id == ID_OnScrollX || id == ID_OnWheelY)
-      //  syncViewCount(ctx.viewCount, ctx.beginIndex, ctx.endIndex,
-      //      ctx.nodeWidth, ctx.stickWidth);
-      //else if (id == ID_OnDBClick) syncDBClick(ctx.crossLineVisible);
+      if (id == ID_OnMouseMove || id == ID_OnMouseLeave) {
+        syncMouseMove(ctx.hoverNormal.index, ctx.hoverNormal.price);
+      } else if (id == ID_OnScrollX || id == ID_OnWheelY) {
+        syncViewCount(ctx.viewCount, ctx.beginIndex, ctx.endIndex,
+            ctx.nodeWidth, ctx.stickWidth);
+      } else if (id == ID_OnDBClick) {
+        syncDBClick(ctx.crossLineVisible);
+      }
     }
   }
 
@@ -178,8 +179,10 @@ class ChartViewModel with DataBinding {
     _context.maxPrice = NumberNull;
     for (var layer in _layers) {
       var minmax = layer.getMinMax(_model, _props, _context);
-      _context.minPrice = NumberCore.min(minmax.first, _context.minPrice);
-      _context.maxPrice = NumberCore.max(minmax.second, _context.maxPrice);
+      _context.minPrice =
+          NumberCore.getMinNumber(minmax.first, _context.minPrice);
+      _context.maxPrice =
+          NumberCore.getMaxNumber(minmax.second, _context.maxPrice);
     }
 
     for (var layer in _layers) {

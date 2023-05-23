@@ -7,8 +7,6 @@
 //**************************************************************************/
 library stock_charts;
 
-import 'dart:math';
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'graphics.dart' as stock_charts;
@@ -118,7 +116,7 @@ class PainterFlutter extends stock_charts.Painter {
       if (!points[i].valid()) break;
       path.lineTo(points[i].x, points[i].y);
     }
-    canvas.drawPath(path, parse(pen));
+    canvas.drawPath(path, parse(pen)..style = PaintingStyle.stroke);
   }
 
   @override

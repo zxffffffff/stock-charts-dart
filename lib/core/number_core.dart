@@ -147,13 +147,13 @@ class NumberCore {
     Number max = min;
     for (int i = beginIndex + 1; i < endIndex; i += 1) {
       Number n = data[i];
-      min = NumberCore.min(min, n);
-      max = NumberCore.max(max, n);
+      min = NumberCore.getMinNumber(min, n);
+      max = NumberCore.getMaxNumber(max, n);
     }
     return Pair(min, max);
   }
 
-  static Number max(Number lhs, Number rhs) {
+  static Number getMaxNumber(Number lhs, Number rhs) {
     if (lhs == NumberNull) {
       return rhs;
     } else if (rhs == NumberNull) {
@@ -165,7 +165,7 @@ class NumberCore {
     return rhs;
   }
 
-  static Number min(Number lhs, Number rhs) {
+  static Number getMinNumber(Number lhs, Number rhs) {
     if (lhs == NumberNull) {
       return rhs;
     } else if (rhs == NumberNull) {
@@ -183,16 +183,28 @@ class NumberCore {
     return val;
   }
 
+  NumberCore max(NumberCore rhs) {
+    comp(Number l, Number r) => NumberCore.getMaxNumber(l, r);
+    data = operatorFunc(this, rhs, comp).data;
+    return this;
+  }
+
+  NumberCore min(NumberCore rhs) {
+    comp(Number l, Number r) => NumberCore.getMinNumber(l, r);
+    data = operatorFunc(this, rhs, comp).data;
+    return this;
+  }
+
   static NumberCore operatorMax(NumberCore lhs, NumberCore rhs) {
     NumberCore result = NumberCore();
-    comp(Number l, Number r) => NumberCore.max(l, r);
+    comp(Number l, Number r) => NumberCore.getMaxNumber(l, r);
     result.data = operatorFunc(lhs, rhs, comp).data;
     return result;
   }
 
   static NumberCore operatorMin(NumberCore lhs, NumberCore rhs) {
     NumberCore result = NumberCore();
-    comp(Number l, Number r) => NumberCore.min(l, r);
+    comp(Number l, Number r) => NumberCore.getMinNumber(l, r);
     result.data = operatorFunc(lhs, rhs, comp).data;
     return result;
   }
@@ -209,20 +221,20 @@ class NumberCore {
     } else if (lCnt == 1 && rCnt > 1) {
       NumberCore buffer = NumberCore.withCount(maxCnt);
       for (int i = 0; i < maxCnt; ++i) {
-        buffer[i] = NumberCore.max(lhs[0], rhs[i]);
+        buffer[i] = NumberCore.getMaxNumber(lhs[0], rhs[i]);
       }
       return buffer;
     } else if (lCnt > 1 && rCnt == 1) {
       NumberCore buffer = NumberCore.withCount(maxCnt);
       for (int i = 0; i < maxCnt; ++i) {
-        buffer[i] = NumberCore.max(lhs[i], rhs[0]);
+        buffer[i] = NumberCore.getMaxNumber(lhs[i], rhs[0]);
       }
       return buffer;
     } else {
       NumberCore buffer = NumberCore.withCount(maxCnt);
       for (int i = 0; i < maxCnt; ++i) {
         if (i < lCnt && i < rCnt) {
-          buffer[i] = NumberCore.max(lhs[i], rhs[i]);
+          buffer[i] = NumberCore.getMaxNumber(lhs[i], rhs[i]);
         }
       }
       return buffer;
@@ -241,20 +253,20 @@ class NumberCore {
     } else if (lCnt == 1 && rCnt > 1) {
       NumberCore buffer = NumberCore.withCount(maxCnt);
       for (int i = 0; i < maxCnt; ++i) {
-        buffer[i] = NumberCore.min(lhs[0], rhs[i]);
+        buffer[i] = NumberCore.getMinNumber(lhs[0], rhs[i]);
       }
       return buffer;
     } else if (lCnt > 1 && rCnt == 1) {
       NumberCore buffer = NumberCore.withCount(maxCnt);
       for (int i = 0; i < maxCnt; ++i) {
-        buffer[i] = NumberCore.min(lhs[i], rhs[0]);
+        buffer[i] = NumberCore.getMinNumber(lhs[i], rhs[0]);
       }
       return buffer;
     } else {
       NumberCore buffer = NumberCore.withCount(maxCnt);
       for (int i = 0; i < maxCnt; ++i) {
         if (i < lCnt && i < rCnt) {
-          buffer[i] = NumberCore.min(lhs[i], rhs[i]);
+          buffer[i] = NumberCore.getMinNumber(lhs[i], rhs[i]);
         }
       }
       return buffer;
@@ -305,10 +317,16 @@ class NumberCore {
   }
 
   Number operator [](int i) {
+    if (i < 0 || i >= data.length) {
+      return NumberNull;
+    }
     return data[i];
   }
 
   void operator []=(int i, Number n) {
+    if (i < 0 || i >= data.length) {
+      return;
+    }
     data[i] = n;
   }
 

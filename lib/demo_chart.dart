@@ -8,9 +8,13 @@
 library stock_charts;
 
 import 'package:flutter/material.dart';
+import 'package:stock_charts/core/data_binding.dart';
+import 'package:stock_charts/model/Plugin/plugin_indicator.dart';
 import 'package:stock_charts/viewmodel/layer/layer_bg.dart';
+import 'package:stock_charts/viewmodel/layer/layer_indicator.dart';
 import 'package:stock_charts/viewmodel/layer/layer_stock.dart';
 import 'core/stock_core.dart';
+import 'model/Plugin/Indicator/Core/index_core.dart';
 import 'model/chart_model.dart';
 import 'core/number_core.dart';
 import 'core/utils.dart';
@@ -38,15 +42,33 @@ class DemoChart extends StatefulWidget {
     const int nKChartCnt = 2;
     for (int i = 0; i < nKChartCnt; i++) {
       bool main = (i == 0);
+
       var model = ChartModel(stockCore);
+      if (main) {
+        model.addPlugin(PluginIndicator());
+      } else {
+        var plugin = PluginIndicator();
+        plugin.init(stockCore);
+        plugin.addIndicator(GenerateMACD());
+        model.addPlugin(plugin);
+      }
+
       var vm = ChartViewModel(model);
       if (main) {
         vm.addLayer(LayerBG());
         vm.addLayer(LayerStock());
+        vm.addLayer(LayerIndicator());
       } else {
         vm.addLayer(LayerBG());
+        vm.addLayer(LayerIndicator());
       }
+      for (int j = 0; j < i; j++) {
+        vm.setSyncOther(kcharts[j].vm);
+        kcharts[j].vm.setSyncOther(vm);
+      }
+
       var view = ChartView(vm);
+
       kcharts.add(StChart(main, view, vm, model));
     }
   }
@@ -75,6 +97,16 @@ class _DemoChartState extends State<DemoChart> {
       ],
     );
   }
+}
+
+IndexFormula GenerateMACD() {
+  var formular = IndexFormula();
+  formular.name = "MACD";
+  formular.expression = "DIF:EMA(CLOSE,SHORT)-EMA(CLOSE,LONG),COLORFF8D1E;\n"
+      "DEA:EMA(DIF,M),COLOR0CAEE6;\n"
+      "MACD:(DIF-DEA)*2,COLORSTICK,COLORE970DC;\n";
+  formular.params = {"SHORT": 12, "LONG": 26, "M": 9};
+  return formular;
 }
 
 StockCore Candlestick() {

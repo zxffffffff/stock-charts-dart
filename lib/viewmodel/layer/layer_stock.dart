@@ -50,6 +50,7 @@ class LayerStock extends ChartLayer {
   @override
   void onPaint(ChartModel model, ChartProps props, ChartContext context,
       Painter painter) {
+    if (areaIndexs.isEmpty || areaIndexs.first.exps.isEmpty) return;
     final exp = areaIndexs.first.exps.first;
     switch (props.lineType) {
       case EnStockLineType.CandlestickHollow:

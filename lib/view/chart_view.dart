@@ -29,15 +29,18 @@ class _ChartViewState extends State<ChartView> with DataBinding {
   @override
   void initState() {
     super.initState();
-
     listen(widget.vm);
   }
 
   @override
   dispose() {
     unlisten(widget.vm);
-
     super.dispose();
+  }
+
+  void update() {
+    if (!mounted) return;
+    setState(() {});
   }
 
   void syncSubChart(ChartView otherChart) {
@@ -48,7 +51,9 @@ class _ChartViewState extends State<ChartView> with DataBinding {
   void on(DataBinding sender, String id) {
     if (sender == widget.vm) {
       fire(id);
-      setState(() {}); // update
+      Future.delayed(const Duration(milliseconds: 50), () {
+        update();
+      });
     }
   }
 
@@ -57,9 +62,8 @@ class _ChartViewState extends State<ChartView> with DataBinding {
     return Expanded(child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
       var size = constraints.biggest;
-      Future.delayed(const Duration(milliseconds: 50), () {
-        widget.vm.onResize(stock_charts.Rect(0, 0, size.width, size.height));
-      });
+      widget.vm.onResize(stock_charts.Rect(0, 0, size.width, size.height));
+
       return GestureDetector(
         onLongPress: () {
           _isLongPress = true;

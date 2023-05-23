@@ -46,7 +46,8 @@ class StockCore {
   Pair<Number, Number> getMinMax(int beginIndex, int endIndex) {
     var minmax = high.getMinMax(beginIndex, endIndex);
     var minmax2 = low.getMinMax(beginIndex, endIndex);
-    return Pair<Number, Number>(NumberCore.min(minmax.first, minmax2.first),
-        NumberCore.max(minmax.second, minmax2.second));
+    return Pair<Number, Number>(
+        NumberCore.getMinNumber(minmax.first, minmax2.first),
+        NumberCore.getMaxNumber(minmax.second, minmax2.second));
   }
 }

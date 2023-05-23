@@ -237,21 +237,21 @@ void main() {
   });
 
   test('MaxTest', () {
-    expect(NumberCore.max(1.1, 2.2), 2.2);
-    expect(NumberCore.max(2.2, 3.3), 3.3);
-    expect(NumberCore.max(1.1, 3.3), 3.3);
-    expect(NumberCore.max(NumberNull, 1.1), 1.1);
-    expect(NumberCore.max(1.1, NumberNull), 1.1);
-    expect(NumberCore.max(NumberNull, NumberNull), NumberNull);
+    expect(NumberCore.getMaxNumber(1.1, 2.2), 2.2);
+    expect(NumberCore.getMaxNumber(2.2, 3.3), 3.3);
+    expect(NumberCore.getMaxNumber(1.1, 3.3), 3.3);
+    expect(NumberCore.getMaxNumber(NumberNull, 1.1), 1.1);
+    expect(NumberCore.getMaxNumber(1.1, NumberNull), 1.1);
+    expect(NumberCore.getMaxNumber(NumberNull, NumberNull), NumberNull);
   });
 
   test('MinTest', () {
-    expect(NumberCore.min(1.1, 2.2), 1.1);
-    expect(NumberCore.min(2.2, 3.3), 2.2);
-    expect(NumberCore.min(1.1, 3.3), 1.1);
-    expect(NumberCore.min(NumberNull, 1.1), 1.1);
-    expect(NumberCore.min(1.1, NumberNull), 1.1);
-    expect(NumberCore.min(NumberNull, NumberNull), NumberNull);
+    expect(NumberCore.getMinNumber(1.1, 2.2), 1.1);
+    expect(NumberCore.getMinNumber(2.2, 3.3), 2.2);
+    expect(NumberCore.getMinNumber(1.1, 3.3), 1.1);
+    expect(NumberCore.getMinNumber(NumberNull, 1.1), 1.1);
+    expect(NumberCore.getMinNumber(1.1, NumberNull), 1.1);
+    expect(NumberCore.getMinNumber(NumberNull, NumberNull), NumberNull);
   });
 
   test('AbsTest', () {
