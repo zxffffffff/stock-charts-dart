@@ -7,7 +7,7 @@
 ## 作者说明
 - 精力有限，偶尔维护，有需要可以联系我答疑解惑（zxffffffff@outlook.com, 1337328542@qq.com）。
 - `star >= 100` 可以考虑更新绘图、叠加、复权等功能。
-- C++（Qt）移植版本：https://github.com/zxffffffff/stock-charts-cpp.git
+- C++（Qt）原始版本：https://github.com/zxffffffff/stock-charts-cpp.git
 
 ## 参数控制
 ![image](https://github.com/zxffffffff/stock-charts-cpp/blob/main/doc/stock-chart-0.png)
