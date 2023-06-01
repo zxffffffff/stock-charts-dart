@@ -28,3 +28,7 @@ migrate_working_dir/
 .dart_tool/
 .packages
 build/
+
+# by zxffffffff
+*.drawio.bkp
+*.drawio.dtmp
