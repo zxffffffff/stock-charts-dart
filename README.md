@@ -28,14 +28,8 @@ var view = ChartView(vm);
 - `star >= 100` 可以考虑更新绘图、叠加、复权等功能。
 - C++（Qt）原始版本：https://github.com/zxffffffff/stock-charts-cpp.git
 
-## 参数控制
-![image](https://github.com/zxffffffff/stock-charts-cpp/blob/main/doc/stock-chart-0.png)
-
-## 指标管理（模仿富途牛牛）
-![image](https://github.com/zxffffffff/stock-charts-cpp/blob/main/doc/stock-chart-1.png)
-
-## 目录结构
-![image](https://github.com/zxffffffff/stock-charts-cpp/blob/main/doc/stock-chart-src.png)
+## 参数控制，指标管理（模仿富途牛牛）
+![image](https://github.com/zxffffffff/stock-charts-dart/blob/main/doc/stock-chart.png)
 
 ## 架构图
 ![image](https://github.com/zxffffffff/stock-charts-cpp/blob/main/doc/architecture.png)
