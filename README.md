@@ -32,5 +32,5 @@ var view = ChartView(vm);
 ## 参数控制，指标管理（模仿富途牛牛）
 ![image](https://github.com/zxffffffff/stock-charts-dart/blob/main/doc/stock-chart.png)
 
-## 架构图
+## C++ 架构图
 ![image](https://github.com/zxffffffff/stock-charts-cpp/blob/main/doc/architecture.png)
